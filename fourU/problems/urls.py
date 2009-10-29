@@ -24,4 +24,5 @@ urlpatterns = patterns('',
 	
 	# AJAX views
 	url(r'^preview-problem/$', 'problems.views.preview_problem', name='preview_problem'),
+	url(r'^save-problem/$', 'problems.views.save_problem', name='save_problem'),
 )

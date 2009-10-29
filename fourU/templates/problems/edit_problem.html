@@ -126,7 +126,7 @@ function new_answer(name) {
 	return false;
 };
 
-function preview_answer() {
+function get_problem_data() {
 	console.log("Alright, we're calling preview_answer()...");
 	var problem = $("textarea").val()
 	if (problem != "") {
@@ -152,13 +152,19 @@ function preview_answer() {
 		// we end up with something like this for data['answers']:
 		// {"answer-1":{"type":"fill-in"},"answer-2":{"type":"radio"}}
 		
-		var args = { 'type': "POST", 'url': "{% url preview_problem %}", 'data': data, 'complete': done };
-		$.ajax(args);
 	}
 	else {
 		console.log("hmm, problem was null");
 		// display an explanation of failure
 	}
+	return data;
+};
+function preview_answer() {
+	$.ajax({ 'type': "POST", 'url': "{% url preview_problem %}", 'data': get_problem_data(), 'complete': done });
+	return false;
+};
+function save_problem() {
+	$.ajax({ 'type': "POST", 'url': "{% url save_problem %}", 'data': get_problem_data(), 'complete': done_saving });
 	return false;
 };
 
@@ -198,7 +204,10 @@ function done(response, status) {
 	<div style="border: 3px #333 dashed; text-align: left;" id="secondary">
 	</div><br />
 	
-	<a href="#" onclick="preview_answer(); return false;">Preview!</a><br />
+	<a href="#" onclick="preview_answer(); return false;">Preview!</a>
+	&nbsp;&nbsp;||&nbsp;&nbsp;
+	<a href="#" onclick="save_problem(); return false;">Save Problem!</a>
+	<br />
 
 	<div style="border: 3px #333 dashed;" id="preview-box">
 	</div>

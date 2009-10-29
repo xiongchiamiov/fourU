@@ -125,6 +125,9 @@ def preview_problem(request):
 	
 	return HttpResponse(simplejson.dumps({'problem': '\n'.join(converted)}), mimetype='application/json')
 
+def save_problem(request):
+	pass
+
 if __name__ in ("__main__", "__console__"):
 	# the doctests aren't identified properly when using iPython or
 	# code.InteractiveConsole (which "manage.py problem" uses)
